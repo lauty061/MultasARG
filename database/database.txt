@@ -1,0 +1,71 @@
+CREATE DATABASE multasarg;
+USE multasarg;
+
+-- Tabla persona
+CREATE TABLE persona (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50),
+    apellidos VARCHAR(50),
+    direccion VARCHAR(100),
+    poblacion VARCHAR(50),
+    telefono VARCHAR(20),
+    dni VARCHAR(15) UNIQUE
+);
+
+-- Tabla vehiculo
+CREATE TABLE vehiculo (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    matricula VARCHAR(20) UNIQUE,
+    marca VARCHAR(50),
+    modelo VARCHAR(50)
+);
+
+-- Relación persona <-> vehiculo (muchos a muchos)
+CREATE TABLE persona_vehiculo (
+    persona_id INT,
+    vehiculo_id INT,
+    PRIMARY KEY (persona_id, vehiculo_id),
+    FOREIGN KEY (persona_id) REFERENCES persona(id) ON DELETE CASCADE,
+    FOREIGN KEY (vehiculo_id) REFERENCES vehiculo(id) ON DELETE CASCADE
+);
+
+-- Tabla accidente
+CREATE TABLE accidente (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    referencia VARCHAR(50) UNIQUE,
+    fecha DATE,
+    hora TIME,
+    lugar VARCHAR(100)
+);
+
+-- Relación accidente <-> persona (muchos a muchos)
+CREATE TABLE accidente_persona (
+    accidente_id INT,
+    persona_id INT,
+    PRIMARY KEY (accidente_id, persona_id),
+    FOREIGN KEY (accidente_id) REFERENCES accidente(id) ON DELETE CASCADE,
+    FOREIGN KEY (persona_id) REFERENCES persona(id) ON DELETE CASCADE
+);
+
+-- Relación accidente <-> vehiculo (muchos a muchos)
+CREATE TABLE accidente_vehiculo (
+    accidente_id INT,
+    vehiculo_id INT,
+    PRIMARY KEY (accidente_id, vehiculo_id),
+    FOREIGN KEY (accidente_id) REFERENCES accidente(id) ON DELETE CASCADE,
+    FOREIGN KEY (vehiculo_id) REFERENCES vehiculo(id) ON DELETE CASCADE
+);
+
+-- Tabla multa (uno a uno: persona y vehículo)
+CREATE TABLE multa (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    referencia VARCHAR(50) UNIQUE,
+    fecha DATE,
+    hora TIME,
+    lugar VARCHAR(100),
+    importe DECIMAL(10,2),
+    persona_id INT,
+    vehiculo_id INT,
+    FOREIGN KEY (persona_id) REFERENCES persona(id) ON DELETE CASCADE,
+    FOREIGN KEY (vehiculo_id) REFERENCES vehiculo(id) ON DELETE CASCADE
+);

@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+
+<h1>Nuevo Accidente</h1>
+<form action="/accidentes" method="POST">
+    <label>Fecha:</label>
+    <input type="date" name="fecha" required><br>
+    <label>Hora:</label>
+    <input type="time" name="hora" required><br>
+    <label>Lugar:</label>
+    <input type="text" name="lugar" required><br>
+    <label>Personas Involucradas:</label><br>
+    <div id="personas-checkboxes">
+        <% personas.forEach(p => { %>
+            <label style="display:block">
+                <input type="checkbox" name="personas[]" value="<%= p.id %>">
+                <%= p.nombre %> <%= p.apellidos %>
+            </label>
+        <% }) %>
+    </div><br>
+    <label>Vehículos Involucrados:</label><br>
+    <div id="vehiculos-checkboxes"><p>Seleccione personas para mostrar vehículos relacionados</p></div><br>
+    <button type="submit">Guardar</button>
+</form>
+<script src="/js/accidentes.js"></script>
+<%- include('../partials/footer') %>

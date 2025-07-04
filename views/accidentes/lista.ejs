@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+<h1>Lista de Accidentes</h1>
+<a href="/accidentes/nuevo" class="link">Registrar nuevo accidente</a>
+<table>
+    <thead>
+        <tr>
+            <th>Referencia</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Lugar</th>
+            <th>Personas</th>
+            <th>Vehículos</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% accidentes.forEach(a => { %>
+            <tr>
+                <td><%= a.referencia %></td>
+                <td><%= a.fecha.toISOString().slice(0, 10) %></td>
+                <td><%= a.hora %></td>
+                <td><%= a.lugar %></td>
+                <td><ul> <% a.personas.forEach(p => { %> <li><%= p.nombre %> <%= p.apellidos %></li><% }) %> </ul> </td>
+                <td><ul><% a.vehiculos.forEach(v => { %><li><%= v.marca %> <%= v.modelo %> (<%= v.matricula %>)</li><% }) %></ul></td>
+                <td><form action="/accidentes/<%= a.id %>/eliminar" method="POST" onsubmit="return confirm('¿Eliminar accidente?')"><button type="submit">Eliminar</button></form></td></tr>
+        <% }) %>
+    </tbody>
+</table>
+<%- include('../partials/footer') %>

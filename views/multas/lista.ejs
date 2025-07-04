@@ -1,0 +1,32 @@
+<%- include('../partials/header') %>
+<h1>Listado de Multas</h1>
+<a href="/multas/nueva" class="link">Registrar nueva multa</a>
+<table>
+    <thead>
+        <tr>
+            <th>Referencia</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Lugar</th>
+            <th>Importe</th>
+            <th>Persona</th>
+            <th>Vehículo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% multas.forEach(m => { %>
+            <tr>
+                <td><%= m.referencia %></td>
+                <td><%= m.fecha.toISOString().slice(0, 10) %></td>
+                <td><%= m.hora %></td>
+                <td><%= m.lugar %></td>
+                <td>$<%= m.importe %></td>
+                <td><%= m.nombre %> <%= m.apellidos %></td>
+                <td><%= m.matricula %></td>
+                <td><form action="/multas/<%= m.id %>/eliminar" method="POST" onsubmit="return confirm('¿Eliminar esta multa?');"><button type="submit">Eliminar</button></form></td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+<%- include('../partials/footer') %>

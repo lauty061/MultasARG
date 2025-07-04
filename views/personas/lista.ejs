@@ -1,0 +1,35 @@
+<%- include('../partials/header') %>
+    <h1>Lista de Personas</h1>
+    <a href="/personas/nueva" class="link">Crear Nueva Persona</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>DNI</th>
+                <th>Vehículos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% personas.forEach(p=> { %>
+                <tr>
+                    <td><%= p.nombre %></td>
+                    <td><%= p.apellidos %></td>
+                    <td><%= p.dni %></td>
+                    <td>
+                        <% if (p.vehiculos.length) { %>
+                            <ul>
+                                <% p.vehiculos.forEach(v=> { %>
+                                    <li>
+                                        <%= v.marca %>
+                                            <%= v.modelo %> (<%= v.matricula %>)
+                                    </li>
+                                    <% }) %>
+                            </ul>
+                            <% } else { %> Sin vehículos <% } %>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+<%- include('../partials/footer') %>

@@ -1,0 +1,17 @@
+<%- include('../partials/header') %>
+
+<h1>Nuevo Vehículo</h1>
+<form action="/vehiculos" method="POST">
+    <input type="text" name="marca" placeholder="Marca" required>
+    <input type="text" name="modelo" placeholder="Modelo" required>
+    <input type="text" name="matricula" placeholder="matricula" required>
+    <label>Propietarios:</label><br>
+    <% personas.forEach(p => { %>
+        <label>
+            <input type="checkbox" name="propietarios" value="<%= p.id %>">
+            <%= p.nombre %> <%= p.apellidos %>
+        </label><br>
+    <% }) %>
+    <br><button type="submit">Guardar</button>
+</form>
+<%- include('../partials/footer') %>
